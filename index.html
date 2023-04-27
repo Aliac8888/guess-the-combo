@@ -1,0 +1,72 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>guess the number</title>
+</head>
+<body>
+    <div class="container">
+        <div class="message">guess combo</div>
+        <div class="game"></div>
+        <button class="btn" type="button">Click to start</button>
+        <div class="hint"><span id="yellow">yellow</span> means your guess is lower than the correct answer.<br>
+            <span id="red">red</span> means your guess is higher than the correct answer.<br>
+            <span id="green">green</span> means that you got the correct answer.
+        </div>
+    </div>
+
+    <script>
+        const gamearea = document.querySelector('.game');
+        const button = document.querySelector('button');
+        const message = document.querySelector('.message');
+        let gameplay = false;
+        let score = 0;
+
+        button.addEventListener('click',function(){
+            if(!gameplay){
+                gameplay=true;
+                score = 0;
+                maker();
+                button.innerHTML='Check The Numbers';
+            }else{
+                const numbers = document.querySelectorAll('.numb');
+                score++;
+                message.innerHTML = "you guess number: " + score;
+                let wincondition = 0;
+                for(let i=0; i<numbers.length; i++){
+                    if(numbers[i].value==numbers[i].correct){
+                        numbers[i].style.backgroundColor = "#539165";
+                        wincondition++;                        
+                    }else{
+                        let color = (numbers[i].value < numbers[i].correct) ? "#F8F988" : "#9C254D";
+                        numbers[i].style.backgroundColor = color;
+                    }
+
+                    if(wincondition==numbers.length){
+                        message.innerHTML = "<span id='win'>you won </span>with " + score + " guesses.";
+                    }
+                }
+            }
+        });
+        
+        function maker(){
+            for(let x=0;x<6;x++){
+                    let element = document.createElement('input');
+                    element.setAttribute('type','number');
+                    element.max = 9;
+                    element.min = 0;
+                    element.size = 1;
+                    element.style.width="75px";
+                    element.classList.add("numb");
+                    element.correct = Math.floor(Math.random()*10);
+                    element.value = 0;
+                    element.order = x;
+
+                    gamearea.appendChild(element);
+            }
+        }
+    </script>
+</body>
+</html>
