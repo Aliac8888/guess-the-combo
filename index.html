@@ -33,7 +33,7 @@
             }else{
                 const numbers = document.querySelectorAll('.numb');
                 score++;
-                message.innerHTML = "you guess number: " + score;
+                message.innerHTML = "your guess number is: " + score;
                 let wincondition = 0;
                 for(let i=0; i<numbers.length; i++){
                     if(numbers[i].value==numbers[i].correct){
