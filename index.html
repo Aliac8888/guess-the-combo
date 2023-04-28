@@ -27,18 +27,23 @@
         button.addEventListener('click',function(){
             if(!gameplay){
                 gameplay=true;
+                gamearea.innerHTML = "";//if we didnt write this code, the combo buttons would appear again after the game ended.
                 score = 0;
-                maker();
+                maker(6);//game combos are dynamic and we can add more or less inputs.
                 button.innerHTML='Check The Numbers';
+                message.innerHTML = "guess combo";
+
             }else{
                 const numbers = document.querySelectorAll('.numb');
                 score++;
                 message.innerHTML = "your guess number is: " + score;
                 let wincondition = 0;
+
                 for(let i=0; i<numbers.length; i++){
                     if(numbers[i].value==numbers[i].correct){
                         numbers[i].style.backgroundColor = "#539165";
-                        wincondition++;                        
+                        wincondition++; 
+
                     }else{
                         let color = (numbers[i].value < numbers[i].correct) ? "#F8F988" : "#9C254D";
                         numbers[i].style.backgroundColor = color;
@@ -46,13 +51,15 @@
 
                     if(wincondition==numbers.length){
                         message.innerHTML = "<span id='win'>you won </span>with " + score + " guesses.";
+                        gameplay = false;
+                        button.innerHTML = "restart game";
                     }
                 }
             }
         });
         
-        function maker(){
-            for(let x=0;x<6;x++){
+        function maker(number){
+            for(let x=0;x<number;x++){
                     let element = document.createElement('input');
                     element.setAttribute('type','number');
                     element.max = 9;
